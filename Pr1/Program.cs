@@ -4,7 +4,7 @@ internal static class Program
 {
     private static void Main()
     {
-        Task2();
+        Task3();
     }
 
 
@@ -34,6 +34,7 @@ internal static class Program
             ? "Среди введенных чисел есть одинаковые."
             : "Среди введенных чисел нет одинаковых.");
     }
+
 
     private static void Task2()
     {
@@ -82,25 +83,75 @@ internal static class Program
             : "Третье по величине число не существует.");
     }
 
+    private static void Task3()
+    {
+        var numbers = InputArray(true);
 
-    private static int[] InputArray()
+        var max = numbers[0];
+        var min = numbers[0];
+        var countMax = 1;
+        var countMin = 1;
+
+        for (var i = 1; i < numbers.Length; i++)
+        {
+            if (numbers[i] > max)
+            {
+                max = numbers[i];
+                countMax = 1;
+            }
+            else if (numbers[i] == max)
+            {
+                countMax++;
+            }
+
+            if (numbers[i] < min)
+            {
+                min = numbers[i];
+                countMin = 1;
+            }
+            else if (numbers[i] == min)
+            {
+                countMin++;
+            }
+        }
+        Console.WriteLine($"Максимальное число: {max}, количество максимальных чисел: {countMax}");
+        Console.WriteLine($"Минимальное число: {min}, количество минимальных чисел: {countMin}");
+    }
+
+    private static int[] InputArray(bool isRandom = false)
     {
         var numbers = new int[4];
-
-        for (var i = 0; i < 4; i++)
+        if (!isRandom)
         {
-            var validInput = false;
-            while (!validInput)
+            for (var i = 0; i < 4; i++)
             {
-                Console.Write($"Введите {i + 1}-е число: ");
-                var input = Console.ReadLine();
-                validInput = int.TryParse(input, out numbers[i]);
-
-                if (!validInput)
+                var validInput = false;
+                while (!validInput)
                 {
-                    Console.WriteLine("Ошибка! Введите целое число.");
+                    Console.Write($"Введите {i + 1}-е число: ");
+                    var input = Console.ReadLine();
+                    validInput = int.TryParse(input, out numbers[i]);
+
+                    if (!validInput)
+                    {
+                        Console.WriteLine("Ошибка! Введите целое число.");
+                    }
                 }
             }
+        }
+        else
+        {
+            var random = new Random();
+            for (var i = 0; i < 4; i++)
+            {
+                numbers[i] = random.Next(-100,100);
+            }
+        }
+
+        Console.WriteLine("Исходный массив /n");
+        for (var i = 0; i < 4; i++)
+        {
+            Console.Write($"{numbers[i]};  ");
         }
 
         return numbers;
