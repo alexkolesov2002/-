@@ -4,8 +4,44 @@ internal static class Program
 {
     private static void Main()
     {
-        Task3();
+        Task4();
     }
+    
+    private static void Task4()
+    {
+        var matrix = new int[5, 4];
+        var rand = new Random();
+        var count = 0;
+        
+        Console.WriteLine("Исходная матрица:");
+        for (var i = 0; i < 5; i++)
+        {
+            for (var j = 0; j < 4; j++)
+            {
+                matrix[i, j] = rand.Next(5, 30);
+                Console.Write(matrix[i, j] + "\t");
+            }
+            Console.WriteLine();
+        }
+        
+        var K1 = 10; 
+        var K2 = 20;
+        
+        for (var i = 0; i < 5; i++)
+        {
+            for (var j = 0; j < 4; j++)
+            {
+                if ((K1 <= matrix[i, j] && matrix[i, j] <= K2) || matrix[i, j] > i + j)
+                {
+                    Console.WriteLine($"{matrix[i,j]}, i;j {i};{j}, {i+j}");
+                    count++;
+                }
+            }
+        }
+        
+        Console.WriteLine($"Количество элементов, удовлетворяющих условию: {count}");
+    }
+    
     
     private static void Task3()
     {
@@ -18,7 +54,7 @@ internal static class Program
         {
             for (var j = 0; j < 4; j++)
             {
-                matrix[i, j] = random.Next(-10, 11); // Генерируем числа от -10 до 10
+                matrix[i, j] = random.Next(-10, 11); 
             }
         }
 
@@ -74,16 +110,17 @@ internal static class Program
         }
 
         Console.WriteLine();
-
-        // Выводим отрицательные элементы
+        
         Console.WriteLine("Отрицательные элементы:");
-        foreach (var item in numbers)
+        for (var index = 0; index < numbers.Length; index++)
         {
+            var item = numbers[index];
             if (item < 0)
             {
                 Console.Write(item + " ");
             }
         }
+
         Console.WriteLine();
     }
     
