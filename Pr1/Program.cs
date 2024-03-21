@@ -8,6 +8,42 @@ internal static class Program
     }
 
 
+    private static void Task3()
+    {
+        var numbers = InputArray(true);
+
+        var max = numbers[0];
+        var min = numbers[0];
+        var countMax = 1;
+        var countMin = 1;
+
+        for (var i = 1; i < numbers.Length; i++)
+        {
+            if (numbers[i] > max)
+            {
+                max = numbers[i];
+                countMax = 1;
+            }
+            else if (numbers[i] == max)
+            {
+                countMax++;
+            }
+
+            if (numbers[i] < min)
+            {
+                min = numbers[i];
+                countMin = 1;
+            }
+            else if (numbers[i] == min)
+            {
+                countMin++;
+            }
+        }
+
+        Console.WriteLine($"Максимальное число: {max}, количество максимальных чисел: {countMax}");
+        Console.WriteLine($"Минимальное число: {min}, количество минимальных чисел: {countMin}");
+    }
+
     private static void Task1()
     {
         var numbers = InputArray();
@@ -83,41 +119,6 @@ internal static class Program
             : "Третье по величине число не существует.");
     }
 
-    private static void Task3()
-    {
-        var numbers = InputArray(true);
-
-        var max = numbers[0];
-        var min = numbers[0];
-        var countMax = 1;
-        var countMin = 1;
-
-        for (var i = 1; i < numbers.Length; i++)
-        {
-            if (numbers[i] > max)
-            {
-                max = numbers[i];
-                countMax = 1;
-            }
-            else if (numbers[i] == max)
-            {
-                countMax++;
-            }
-
-            if (numbers[i] < min)
-            {
-                min = numbers[i];
-                countMin = 1;
-            }
-            else if (numbers[i] == min)
-            {
-                countMin++;
-            }
-        }
-        Console.WriteLine($"Максимальное число: {max}, количество максимальных чисел: {countMax}");
-        Console.WriteLine($"Минимальное число: {min}, количество минимальных чисел: {countMin}");
-    }
-
     private static int[] InputArray(bool isRandom = false)
     {
         var numbers = new int[4];
@@ -144,7 +145,7 @@ internal static class Program
             var random = new Random();
             for (var i = 0; i < 4; i++)
             {
-                numbers[i] = random.Next(-100,100);
+                numbers[i] = random.Next(-100, 100);
             }
         }
 
