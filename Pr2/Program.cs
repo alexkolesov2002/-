@@ -4,7 +4,149 @@ internal static class Program
 {
     private static void Main()
     {
-        Task4();
+        Task6();
+    }
+    
+    private static void Task6()
+    {
+        Console.Write("Введите значение N: ");
+        var N = int.Parse(Console.ReadLine());
+        Console.Write("Введите значение M: ");
+        var M = int.Parse(Console.ReadLine());
+        Console.Write("Введите количество единиц K: ");
+        var K = int.Parse(Console.ReadLine());
+
+        var A = new int[N, M];
+        var rand = new Random();
+
+        for (var i = 0; i < K; i++)
+        {
+            int x, y;
+            do
+            {
+                x = rand.Next(N);
+                y = rand.Next(M);
+            } while (A[x, y] == 1);
+
+            A[x, y] = 1;
+        }
+
+        Console.WriteLine("Исходный массив:");
+        PrintArray(A, true);
+        
+        Console.WriteLine("Исходный массив:");
+        PrintArray(A, false);
+
+        Console.WriteLine("Зеркальное отображение:");
+        PrintMirrors(A);
+    }
+    static void PrintArray(int[,] array, bool isNumbers)
+    {
+        for (var i = 0; i < array.GetLength(0); i++)
+        {
+            for (var j = 0; j < array.GetLength(1); j++)
+            {
+                if (!isNumbers)
+                {
+                    Console.Write(array[i, j] == 0 ? " " : "*");
+                }
+                else
+                {
+                    Console.Write(array[i, j] + " ");
+                }
+               
+            }
+            Console.WriteLine();
+        }
+    }
+    static void PrintMirrors(int[,] array)
+    {
+        var rows = array.GetLength(0);
+        var cols = array.GetLength(1);
+
+        for (var i = 0; i < rows; i++)
+        {
+            for (var j = 0; j < cols; j++)
+            {
+                Console.Write(array[i, j] == 0 ? " " : "*");
+            }
+            Console.Write(" | ");
+            for (var j = cols - 1; j >= 0; j--)
+            {
+                Console.Write(array[i, j] == 0 ? " " : "*");
+            }
+            Console.WriteLine();
+        }
+
+        Console.WriteLine(new string('-', cols * 2 + 3));
+
+        for (var i = rows - 1; i >= 0; i--)
+        {
+            for (var j = 0; j < cols; j++)
+            {
+                Console.Write(array[i, j] == 0 ? " " : "*");
+            }
+            Console.Write(" | ");
+            for (var j = cols - 1; j >= 0; j--)
+            {
+                Console.Write(array[i, j] == 0 ? " " : "*");
+            }
+            Console.WriteLine();
+        }
+    }
+
+    
+    private static void Task5()
+    {
+        var B = new int[4, 4];
+        var rand = new Random();
+        var minDiagonalElement = int.MaxValue;
+        var rowWithMinElement = -1;
+        var K = 10; 
+
+       
+        for (var i = 0; i < 4; i++)
+        {
+            for (var j = 0; j < 4; j++)
+            {
+                B[i, j] = rand.Next(1, 30);
+                if (i == j && B[i, j] < minDiagonalElement)
+                {
+                    minDiagonalElement = B[i, j];
+                    rowWithMinElement = i;
+                }
+            }
+        }
+
+        Console.WriteLine("Матрица B(4,4):");
+        for (var i = 0; i < 4; i++)
+        {
+            for (var j = 0; j < 4; j++)
+            {
+                Console.Write(B[i, j] + "\t");
+            }
+            Console.WriteLine();
+        }
+
+        Console.WriteLine("Наименьший элемент на главной диагонали: " + minDiagonalElement);
+
+        if (minDiagonalElement < K && rowWithMinElement != -1)
+        {
+            for (var j = 0; j < 4; j++)
+            {
+                B[rowWithMinElement, j]++;
+            }
+
+            Console.WriteLine("Матрица после увеличения элементов строки: ");
+            for (var i = 0; i < 4; i++)
+            {
+                for (var j = 0; j < 4; j++)
+                {
+                    Console.Write(B[i, j] + "\t");
+                }
+                Console.WriteLine();
+            }
+        }
     }
     
     private static void Task4()
@@ -131,7 +273,7 @@ internal static class Program
         var length = numbers.Length;
         for (var i = 0; i < length / 2; i++)
         {
-            int temp = numbers[i];
+            var temp = numbers[i];
             numbers[i] = numbers[length - i - 1];
             numbers[length - i - 1] = temp;
         }
