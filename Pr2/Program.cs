@@ -4,9 +4,40 @@ internal static class Program
 {
     private static void Main()
     {
-        Task6();
+        Task7();
     }
-    
+    private static void Task7()
+    {
+        var allValues = new ushort[ushort.MaxValue];
+        for (ushort i = 0; i < ushort.MaxValue; i++)
+        {
+            allValues[i] = i;
+        }
+
+        var array = new ushort[ushort.MaxValue - 1]; 
+        var rand = new Random();
+        var missingValueIndex = rand.Next(ushort.MaxValue - 1);
+        
+        for (var i = 0; i < missingValueIndex; i++)
+        {
+            array[i] = allValues[i];
+        }
+        for (var i = missingValueIndex; i < ushort.MaxValue - 1; i++)
+        {
+            array[i] = allValues[i + 1];
+        }
+
+        ulong sum = 0;
+        foreach (var num in array)
+        {
+            sum += num;
+        }
+
+        var expectedSum = (ulong)(array.Length + 1) * (ulong)array.Length / 2;
+        var missingValue = expectedSum - sum;
+        Console.WriteLine($"Недостающее число: {missingValue}");
+       
+    }
     private static void Task6()
     {
         Console.Write("Введите значение N: ");
