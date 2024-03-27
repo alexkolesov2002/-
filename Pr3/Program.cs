@@ -10,11 +10,70 @@ internal static class Program
         var numbers = InputArray(100000);
         /*OutputArray(numbers);*/
         stopwatch.Start();
-        ShakerSort(numbers);
+        ShellSort(numbers);
         stopwatch.Stop();
         /*OutputArray(numbers);*/
         Console.WriteLine($"Время выполнения сортировки: {stopwatch.ElapsedMilliseconds} мс");
     }
+    #region ShellSort
+
+    private static int[] ShellSort(int[] numbers)
+    {
+        for (var interval = numbers.Length / 2; interval > 0; interval /= 2)
+        {
+            for (var i = interval; i < numbers.Length; i++)
+            {
+                var currentKey = numbers[i];
+                var k = i;
+                while (k >= interval && numbers[k - interval] > currentKey)
+                {
+                    numbers[k] = numbers[k - interval];
+                    k -= interval;
+                }
+                numbers[k] = currentKey;
+            }
+        }
+
+        return numbers;
+    }
+    
+    #endregion
+    
+    #region QuickSort
+
+    private static int[] QuickSort(int[] numbers , int minIndex, int maxIndex)
+    {
+        if (minIndex >= maxIndex)
+        {
+            return numbers;
+        }
+
+        var pivotIndex = Partition(numbers, minIndex, maxIndex);
+        QuickSort(numbers, minIndex, pivotIndex - 1);
+        QuickSort(numbers, pivotIndex + 1, maxIndex);
+
+        return numbers;
+    }
+
+    private static int Partition(int[] array, int minIndex, int maxIndex)
+    {
+        var pivot = minIndex - 1;
+        for (var i = minIndex; i < maxIndex; i++)
+        {
+            if (array[i] < array[maxIndex])
+            {
+                pivot++;
+                Swap(ref array[pivot], ref array[i]);
+            }
+        }
+
+        pivot++;
+        Swap(ref array[pivot], ref array[maxIndex]);
+        return pivot;
+    }
+   
+    #endregion
+    
     
     #region ShakerSort
 
@@ -51,12 +110,7 @@ internal static class Program
         return numbers;
     }
 
-    static void Swap(ref int number1, ref int number2)
-    {
-        var temp = number1;
-        number1 = number2;
-        number2 = temp;
-    }
+   
     #endregion
     
     
@@ -180,5 +234,12 @@ internal static class Program
             var number = numbers[i];
             Console.Write(number + " ");
         }
+    }
+    
+    static void Swap(ref int number1, ref int number2)
+    {
+        var temp = number1;
+        number1 = number2;
+        number2 = temp;
     }
 }
