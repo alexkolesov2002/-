@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace Pr1;
+namespace Pr3;
 
 internal static class Program
 {
@@ -18,12 +18,12 @@ internal static class Program
     
     private static int[] InputArray()
     {
-        var numbers = new int[50000];
+        var numbers = new int[10];
 
         var random = new Random();
         for (var i = 0; i < numbers.Length; i++)
         {
-            numbers[i] = random.Next(0, 100);
+            numbers[i] = random.Next(0, 40);
         }
 
         return numbers;
@@ -48,7 +48,7 @@ internal static class Program
             {
                 if (numbers[i] > numbers[j])
                 {
-                    Thread.Sleep(5555);
+                    Thread.Sleep(2000);
                     int temp = numbers[i];
                     numbers[i] = numbers[j];
                     numbers[j] = temp;
