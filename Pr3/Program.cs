@@ -7,39 +7,112 @@ internal static class Program
     private static void Main()
     {
         var stopwatch = new Stopwatch();
-        var numbers = InputArray();
+        var numbers = InputArray(100000);
         /*OutputArray(numbers);*/
         stopwatch.Start();
-        BubbleSort(numbers);
+        ShakerSort(numbers);
         stopwatch.Stop();
         /*OutputArray(numbers);*/
         Console.WriteLine($"Время выполнения сортировки: {stopwatch.ElapsedMilliseconds} мс");
     }
     
-    private static int[] InputArray()
-    {
-        var numbers = new int[10];
+    #region ShakerSort
 
-        var random = new Random();
-        for (var i = 0; i < numbers.Length; i++)
+    private static int[] ShakerSort(int[] numbers)
+    {
+        for (var i = 0; i < numbers.Length / 2; i++)
         {
-            numbers[i] = random.Next(0, 40);
+            var swapFlag = false;
+           
+            for (var j = i; j < numbers.Length - i - 1; j++)
+            {
+                if (numbers[j] > numbers[j + 1])
+                {
+                    Swap(ref numbers[j], ref numbers[j + 1]);
+                    swapFlag = true;
+                }
+            }
+            
+            for (var j = numbers.Length - 2 - i; j > i; j--)
+            {
+                if (numbers[j - 1] > numbers[j])
+                {
+                    Swap(ref numbers[j - 1], ref numbers[j]);
+                    swapFlag = true;
+                }
+            }
+            
+            if (!swapFlag)
+            {
+                break;
+            }
         }
 
         return numbers;
     }
 
-    private static void OutputArray(int[] numbers)
+    static void Swap(ref int number1, ref int number2)
     {
-        Console.WriteLine("Массив:");
-        for (var i = 0; i < numbers.Length; i++)
-        {
-            var number = numbers[i];
-            Console.Write(number + " ");
-        }
+        var temp = number1;
+        number1 = number2;
+        number2 = temp;
     }
+    #endregion
     
-    #region MyRegion
+    
+    #region SelectionSort
+
+    private static int[] SelectionSort(int[] numbers)
+    {
+        for (var i = 0; i < numbers.Length - 1; i++)
+        {
+            var min=i;
+            for (var j = i + 1; j < numbers.Length; j++)
+            {
+                if (numbers[j] < numbers[min])
+                {
+                    min = j;
+                }
+            }
+            
+            var temp = numbers[min];
+            numbers[min] = numbers[i];
+            numbers[i] = temp;
+        }
+        return numbers;
+    }
+
+    #endregion
+    
+    #region InsertionSort
+
+    private static int[] InsertionSort(int[] numbers)
+    {
+        for (var i = 1; i < numbers.Length; i++)
+        {
+            var val = numbers[i];
+            for (var j = i - 1; j >= 0;)
+            {
+                if (val < numbers[j])
+                {
+                    numbers[j + 1] = numbers[j];
+                    j--;
+                    numbers[j + 1] = val;
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+        return numbers;
+    }
+
+    #endregion
+
+
+    #region BubbleSort
+
     private static int[] BubbleSort(int[] numbers)
     {
         for (var i = 0; i < numbers.Length - 1; i++)
@@ -49,7 +122,7 @@ internal static class Program
                 if (numbers[i] > numbers[j])
                 {
                     Thread.Sleep(2000);
-                    int temp = numbers[i];
+                    var temp = numbers[i];
                     numbers[i] = numbers[j];
                     numbers[j] = temp;
                     DrawArray(numbers);
@@ -59,6 +132,7 @@ internal static class Program
 
         return numbers;
     }
+
     private static void DrawArray(int[] numbers)
     {
         Console.Clear();
@@ -81,6 +155,30 @@ internal static class Program
         Console.Write(text);
         Console.ResetColor();
     }
+
     #endregion
+
     
+    private static int[] InputArray(int length = 100)
+    {
+        var numbers = new int[length];
+
+        var random = new Random();
+        for (var i = 0; i < numbers.Length; i++)
+        {
+            numbers[i] = random.Next(0, length);
+        }
+
+        return numbers;
+    }
+
+    private static void OutputArray(int[] numbers)
+    {
+        Console.WriteLine("Массив:");
+        for (var i = 0; i < numbers.Length; i++)
+        {
+            var number = numbers[i];
+            Console.Write(number + " ");
+        }
+    }
 }
