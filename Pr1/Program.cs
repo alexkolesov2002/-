@@ -82,7 +82,7 @@ internal static class Program
             {
                 if (numbers[i] > numbers[j])
                 {
-                    int temp = numbers[i];
+                    var temp = numbers[i];
                     numbers[i] = numbers[j];
                     numbers[j] = temp;
                 }
