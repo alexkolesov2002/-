@@ -4,7 +4,7 @@ internal static class Program
 {
     private static void Main()
     {
-        Task3();
+        Task2();
     }
 
 
@@ -102,9 +102,18 @@ internal static class Program
                 thirdLargest = numbers[2];
                 hasThirdNumber = true;
             }
+            
             else if (numbers[1] != numbers[2] && numbers[2] != numbers[3])
             {
-                thirdLargest = numbers[2];
+                if (numbers[0] != numbers[1])
+                {
+                    thirdLargest = numbers[2];
+                }
+                else
+                {
+                    thirdLargest = numbers[3];
+                }
+                
                 hasThirdNumber = true;
             }
             else if (numbers[1] == numbers[2] && numbers[2] != numbers[3])
